@@ -51,19 +51,7 @@ class _NavigationBarState extends State<Navigation_Bar> {
     );
   }
 
-  /// Shipping label at the top
-  Widget shippingLabel(double screenWidth) {
-    bool isDesktop = screenWidth >= 600;
-    return Container(
-      decoration: BoxDecoration(color: AppColors.mossStone),
-      child: Center(
-        child: Text(
-          "Enjoy Free Shipping On All Orders",
-          style: isDesktop ? TextstylesDesktop.labelstyle : TextstylesMobile.labelstyle,
-        ),
-      ),
-    );
-  }
+
 
   /// Logo based on screen size
   Widget buildLogo(double screenWidth) {
@@ -130,4 +118,17 @@ class _NavigationBarState extends State<Navigation_Bar> {
       ],
     );
   }
+}
+/// Shipping label at the top
+Widget shippingLabel(double screenWidth) {
+  bool isDesktop = screenWidth >= 600;
+  return Container(
+    decoration: BoxDecoration(color: AppColors.mossStone),
+    child: Center(
+      child: Text(
+        "Enjoy Free Shipping On All Orders",
+        style: isDesktop ? TextstylesDesktop.labelstyle : TextstylesMobile.labelstyle,
+      ),
+    ),
+  );
 }

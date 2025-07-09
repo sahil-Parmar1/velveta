@@ -9,7 +9,7 @@ class TextstylesDesktop
   static const TextStyle labelstyle=TextStyle(
     fontSize: 18,
     color: AppColors.cloudMist,
-      fontWeight: FontWeight.w100
+      fontWeight: FontWeight.w300
   );
 
   //for menu label style
