@@ -3,117 +3,131 @@
 ///with shipping label
 
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:velveta/utils/colors.dart';
 import 'package:velveta/utils/textstyles.dart';
-import 'package:flutter/cupertino.dart';
 
 class Navigation_Bar extends StatefulWidget {
   const Navigation_Bar({super.key});
 
   @override
-  State<Navigation_Bar> createState() => _NaviagationBarState();
+  State<Navigation_Bar> createState() => _NavigationBarState();
 }
 
-class _NaviagationBarState extends State<Navigation_Bar> {
+class _NavigationBarState extends State<Navigation_Bar> {
   @override
   Widget build(BuildContext context) {
-    final screenWidth=MediaQuery.of(context).size.width;
-    return LayoutBuilder(
-      builder: (context,constraints) {
+    //for responsiveness
+    final screenWidth = MediaQuery.of(context).size.width;
+    final bool isPhone = screenWidth < 480;
+    final bool isTablet = screenWidth >= 480 && screenWidth < 1024;
+    final bool isDesktop = screenWidth >= 1024;
 
+    return LayoutBuilder(
+      builder: (context, constraints) {
         return Column(
           children: [
-            shippinglable(screenWidth),
+            shippingLabel(screenWidth),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Container(
                 constraints: BoxConstraints(
-                  maxWidth: screenWidth>=600?1000:600
+                  maxWidth: 1000,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-
-                    //menu icon when screen is smalll
-                    if(screenWidth<850)
-                      Row(
-                        children: [
-                          Icon(Icons.menu,size: screenWidth>=600?30:28,),
-                          SizedBox(width: 10,),
-                          Icon(Icons.search,size: screenWidth>=600?30:28,)
-                        ],
-                      ),
-
-                    Image(image: AssetImage(screenWidth>=600?"assets/logos/logodesktop.png":"assets/logos/logomoblie.png"),
-                    width: screenWidth>=600?182:130,
-                      height: screenWidth>=600?79:65,
-                    ),
-
-                    //show menu iteams only when screen is big
-                    if(screenWidth>=850)
-                      Container(
-                        constraints: BoxConstraints(
-                            maxWidth: 500
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text("Collections",style: TextstylesDesktop.menulabelstyle,),
-                            Text("New In",style: TextstylesDesktop.menulabelstyle,),
-                            Text("Velvetaweek",style: TextstylesDesktop.menulabelstyle,),
-                            Text("Plus Size",style: TextstylesDesktop.menulabelstyle,),
-                            Text("Sustainability",style: TextstylesDesktop.menulabelstyle,),
-                          ],
-                        ),
-                      ),
-
-                    if(screenWidth>=850)
-                    Row(
-                      children: [
-                        Icon(Icons.search,size: 30,),
-                        SizedBox(width: 10,),
-                        Icon(CupertinoIcons.person,size: 30,),
-                        SizedBox(width: 10,),
-                        Icon(CupertinoIcons.heart,size: 30,),
-                        SizedBox(width: 10,),
-                        Icon(Icons.shopping_bag_outlined,size: 30,)
-                      ],
-                    ),
-
-                    if(screenWidth<850)
-                      Row(
-                        children: [
-                          Icon(CupertinoIcons.heart,size: screenWidth>=600?30:28,),
-                          SizedBox(width: 10,),
-                          Icon(Icons.shopping_bag_outlined,size: screenWidth>=600?30:28,)
-                        ],
-                      ),
+                    if (!isDesktop) buildCompactMenuIcons(isTablet),
+                    buildLogo(screenWidth),
+                    if (isDesktop) buildMenuItems(),
+                    buildActionIcons(isDesktop, isTablet),
                   ],
                 ),
               ),
             ),
-
-
-
           ],
         );
-      }
+      },
     );
   }
-}
 
-
-//shipping label
-Widget shippinglable(double screenwidth)
-{
-  bool isdesktop=screenwidth>=600;
-  return Container(
-      decoration: BoxDecoration(
-        color: AppColors.mossStone,
-
+  /// Shipping label at the top
+  Widget shippingLabel(double screenWidth) {
+    bool isDesktop = screenWidth >= 600;
+    return Container(
+      decoration: BoxDecoration(color: AppColors.mossStone),
+      child: Center(
+        child: Text(
+          "Enjoy Free Shipping On All Orders",
+          style: isDesktop ? TextstylesDesktop.labelstyle : TextstylesMobile.labelstyle,
+        ),
       ),
-    child: Center(
-      child: Text("Enjoy Free Shipping On All Orders",style: isdesktop?TextstylesDesktop.labelstyle:TextstylesMobile.labelstyle,),
-    ),
-  );
+    );
+  }
+
+  /// Logo based on screen size
+  Widget buildLogo(double screenWidth) {
+    final isTabletOrMore = screenWidth >= 600;
+    return Image.asset(
+      isTabletOrMore ? "assets/logos/logodesktop.png" : "assets/logos/logomoblie.png",
+      width: isTabletOrMore ? 182 : 130,
+      height: isTabletOrMore ? 79 : 65,
+    );
+  }
+
+  /// Menu items for desktop view
+  Widget buildMenuItems() {
+    return Container(
+      constraints: const BoxConstraints(maxWidth: 500),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          Text("Collections", style: TextstylesDesktop.menulabelstyle),
+          Text("New In", style: TextstylesDesktop.menulabelstyle),
+          Text("Velvetaweek", style: TextstylesDesktop.menulabelstyle),
+          Text("Plus Size", style: TextstylesDesktop.menulabelstyle),
+          Text("Sustainability", style: TextstylesDesktop.menulabelstyle),
+        ],
+      ),
+    );
+  }
+
+  /// Action icons (search, profile, heart, cart)
+  Widget buildActionIcons(bool isDesktop, bool isTablet) {
+    final iconSize = isTablet ? 30.0 : 28.0;
+
+    if (isDesktop) {
+      return Row(
+        children: const [
+          Icon(Icons.search, size: 30),
+          SizedBox(width: 10),
+          Icon(CupertinoIcons.person, size: 30),
+          SizedBox(width: 10),
+          Icon(CupertinoIcons.heart, size: 30),
+          SizedBox(width: 10),
+          Icon(Icons.shopping_bag_outlined, size: 30),
+        ],
+      );
+    } else {
+      return Row(
+        children: [
+          Icon(CupertinoIcons.heart, size: iconSize),
+          const SizedBox(width: 10),
+          Icon(Icons.shopping_bag_outlined, size: iconSize),
+        ],
+      );
+    }
+  }
+
+  /// Menu + Search for phone/tablet
+  Widget buildCompactMenuIcons(bool isTablet) {
+    final iconSize = isTablet ? 30.0 : 28.0;
+    return Row(
+      children: [
+        Icon(Icons.menu, size: iconSize),
+        const SizedBox(width: 10),
+        Icon(Icons.search, size: iconSize),
+      ],
+    );
+  }
 }
