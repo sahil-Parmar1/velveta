@@ -67,25 +67,35 @@ class Bottom_Bar extends StatelessWidget {
              Expanded(
                child: Column(
                  children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Flexible(child: _buildfristcolumn(isDesktop, isTablet)),
-                      Flexible(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _buildAbout(isDesktop, isTablet),
-                            _buildHelp(isDesktop, isTablet),
-                            _buildJoinup(isDesktop, isTablet)
-                          ],
-                        ),
-                      )
-                    ],
+                  Container(
+                    constraints: BoxConstraints(
+                        maxWidth: 1000
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Flexible(child: _buildfristcolumn(isDesktop, isTablet)),
+                        Flexible(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildAbout(isDesktop, isTablet),
+                              _buildHelp(isDesktop, isTablet),
+                              _buildJoinup(isDesktop, isTablet)
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
-                   _buildsocialactions(isDesktop, isTablet)
+                   SizedBox(height: 25,),
+                   Container(
+                       constraints: BoxConstraints(
+                           maxWidth: 1000
+                       ),
+                       child: _buildsocialactions(isDesktop, isTablet))
                  ],
                ),
              )
@@ -102,8 +112,6 @@ class Bottom_Bar extends StatelessWidget {
               color: AppColors.slateGray
           ),
           child:Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -123,7 +131,11 @@ class Bottom_Bar extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 15,),
-              _buildsocialactions(isDesktop, isTablet)
+              Container(
+                  constraints: BoxConstraints(
+                    maxWidth: 600
+                  ),
+                  child: _buildsocialactions(isDesktop, isTablet))
             ],
           ),
         ),
@@ -282,7 +294,6 @@ class Bottom_Bar extends StatelessWidget {
    return Center(
      child: Container(
        child: Row(
-         mainAxisAlignment: MainAxisAlignment.spaceBetween,
          children: [
            Expanded(
              child: Column(
