@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:velveta/componets/bottom_bar.dart';
 import 'package:velveta/componets/navigation_bar.dart';
 import 'package:flutter/services.dart';
 
@@ -24,6 +25,7 @@ class Myapp extends StatelessWidget {
         child: Column(
           children: [
             Navigation_Bar(),
+            Bottom_Bar()
 
           ],
         ),
