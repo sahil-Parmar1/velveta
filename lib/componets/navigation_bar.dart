@@ -4,19 +4,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:velveta/state/models/hover_state.dart';
+import 'package:velveta/state/providers.dart';
 import 'package:velveta/utils/colors.dart';
 import 'package:velveta/utils/textstyles.dart';
 
-class Navigation_Bar extends StatefulWidget {
+class Navigation_Bar extends ConsumerStatefulWidget {
   const Navigation_Bar({super.key});
 
   @override
-  State<Navigation_Bar> createState() => _NavigationBarState();
+  ConsumerState<Navigation_Bar> createState() => _NavigationBarState();
 }
 
-class _NavigationBarState extends State<Navigation_Bar> {
+class _NavigationBarState extends ConsumerState<Navigation_Bar> {
+
+
   @override
   Widget build(BuildContext context) {
+
+
     //for responsiveness
     final screenWidth = MediaQuery.of(context).size.width;
     final bool isPhone = screenWidth < 480;
@@ -51,6 +58,32 @@ class _NavigationBarState extends State<Navigation_Bar> {
     );
   }
 
+  //for menu iteam
+  Widget _buildMenuItem(WidgetRef ref, HoverData hoverData, String item) {
+    final isHovered = hoverData.isHovering && hoverData.menuItem == item;
+
+    return MouseRegion(
+      onEnter: (_) {
+        ref.read(hoverProvider.notifier).state =
+            ref.read(hoverProvider).copyWith(isHovering: true, menuItem: item);
+      },
+      onExit: (_) {
+        // Optional: reset hover if needed
+      },
+      child: GestureDetector(
+        onTap: () {
+          ref.read(hoverProvider.notifier).state =
+              ref.read(hoverProvider).copyWith(isHovering: true, menuItem: item);
+        },
+        child: Text(
+          item,
+          style: isHovered
+              ? TextstylesDesktop.menulabelhoverstyle
+              : TextstylesDesktop.menulabelstyle,
+        ),
+      ),
+    );
+  }
 
 
   /// Logo based on screen size
@@ -65,17 +98,20 @@ class _NavigationBarState extends State<Navigation_Bar> {
 
   /// Menu items for desktop view
   Widget buildMenuItems() {
+    final menuItems = [
+      "Collections",
+      "New In",
+      "Velvetaweek",
+      "Plus Size",
+      "Sustainability",
+    ];
+
+    final hoverData=ref.watch(hoverProvider);
     return Container(
       constraints: const BoxConstraints(maxWidth: 500),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          Text("Collections", style: TextstylesDesktop.menulabelstyle),
-          Text("New In", style: TextstylesDesktop.menulabelstyle),
-          Text("Velvetaweek", style: TextstylesDesktop.menulabelstyle),
-          Text("Plus Size", style: TextstylesDesktop.menulabelstyle),
-          Text("Sustainability", style: TextstylesDesktop.menulabelstyle),
-        ],
+        children: menuItems.map((item) => _buildMenuItem(ref, hoverData, item)).toList(),
       ),
     );
   }

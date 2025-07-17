@@ -18,6 +18,11 @@ class TextstylesDesktop
    color:AppColors.smokyGranite,
    fontWeight: FontWeight.w400
  );
+  static const TextStyle menulabelhoverstyle=TextStyle(
+      fontSize: 18,
+      color:AppColors.mossStone,
+      fontWeight: FontWeight.w500
+  );
 }
 
 class TextstylesMobile
