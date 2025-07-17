@@ -18,10 +18,19 @@ class TextstylesDesktop
    color:AppColors.smokyGranite,
    fontWeight: FontWeight.w400
  );
+
+ //for when hover
   static const TextStyle menulabelhoverstyle=TextStyle(
       fontSize: 18,
       color:AppColors.mossStone,
       fontWeight: FontWeight.w500
+  );
+
+  //for submenu label
+  static const TextStyle submenulabelstyle=TextStyle(
+      fontSize: 15,
+      color:AppColors.smokyGranite,
+      fontWeight: FontWeight.w400
   );
 }
 

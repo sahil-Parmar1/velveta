@@ -8,4 +8,5 @@ class AppColors
   static const Color smokyGranite = Color(0xFF5E5858);
   static const Color slateGray = Color(0xFF404040);
   static const Color OliveMoss = Color(0xFF5A6D57);
+  static const Color Shimmer = Color(0xFF799674);
 }

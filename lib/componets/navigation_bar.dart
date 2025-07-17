@@ -72,6 +72,10 @@ class _NavigationBarState extends ConsumerState<Navigation_Bar> {
       },
       child: GestureDetector(
         onTap: () {
+          if(hoverData.isHovering)
+            ref.read(hoverProvider.notifier).state =
+                ref.read(hoverProvider).copyWith(isHovering: false, menuItem: item);
+            else
           ref.read(hoverProvider.notifier).state =
               ref.read(hoverProvider).copyWith(isHovering: true, menuItem: item);
         },

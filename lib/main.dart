@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:velveta/componets/bottom_bar.dart';
+import 'package:velveta/componets/menu_bar.dart';
 import 'package:velveta/componets/navigation_bar.dart';
 import 'package:flutter/services.dart';
 import 'package:velveta/state/providers.dart';
 import 'dart:ui';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+
+void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(ProviderScope(child: Myapp()));
 }
 
@@ -74,11 +82,7 @@ class Myapp extends ConsumerWidget {
                 top: 100,
                 left: 0,
                 right: 0,
-                child: MouseRegion(
-                  onEnter: (_) =>  ref.read(hoverProvider.notifier).state=ref.read(hoverProvider).copyWith(isHovering: true),
-                  onExit: (_) => ref.read(hoverProvider.notifier).state=ref.read(hoverProvider).copyWith(isHovering: false),
-                  child: Text("${hoverData.menuItem}"),
-                ),
+                child: Menu_Bar()
               )
             ],
           ],

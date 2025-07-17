@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "530498810284",
+    "project_id": "velveta-d417c",
+    "storage_bucket": "velveta-d417c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530498810284:android:d2c8e728f9e41310d18a09",
+        "android_client_info": {
+          "package_name": "com.example.velveta"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4sc949uBFhEP9kGKGF5E98Bvq6WrzTsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
