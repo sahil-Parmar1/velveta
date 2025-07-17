@@ -38,6 +38,7 @@ dependencies:
   firebase_core: ^3.15.1
   cloud_firestore: ^5.6.11
   shimmer: ^3.0.0
+  cached_network_image: ^3.4.1
 
 dev_dependencies:
   flutter_test:
